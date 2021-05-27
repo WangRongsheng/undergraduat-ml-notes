@@ -1,0 +1,940 @@
+
+
+
+
+<!DOCTYPE html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      <meta http-equiv="x-ua-compatible" content="ie=edge">
+      
+        <meta name="description" content="越努力越幸运">
+      
+      
+        <link rel="canonical" href="https://github.com/WangRongsheng/7支持向量机/">
+      
+      
+        <meta name="author" content="王荣胜">
+      
+      
+        <meta name="lang:clipboard.copy" content="复制">
+      
+        <meta name="lang:clipboard.copied" content="已复制">
+      
+        <meta name="lang:search.language" content="zh">
+      
+        <meta name="lang:search.pipeline.stopwords" content="True">
+      
+        <meta name="lang:search.pipeline.trimmer" content="True">
+      
+        <meta name="lang:search.result.none" content="没有找到符合条件的结果">
+      
+        <meta name="lang:search.result.one" content="找到 1 个符合条件的结果">
+      
+        <meta name="lang:search.result.other" content="# 个符合条件的结果">
+      
+        <meta name="lang:search.tokenizer" content="[\uff0c\u3002]+">
+      
+      <link rel="shortcut icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-3.0.6">
+    
+    
+      
+        <title>7.支持向量机 - 教书的先生</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/application.451f80e5.css">
+      
+        <link rel="stylesheet" href="../assets/stylesheets/application-palette.22915126.css">
+      
+      
+        
+        
+        <meta name="theme-color" content="#3f51b5">
+      
+    
+    
+      <script src="../assets/javascripts/modernizr.1aa3b519.js"></script>
+    
+    
+      
+        <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700|Roboto+Mono">
+        <style>body,input{font-family:"Roboto","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono","Courier New",Courier,monospace}</style>
+      
+    
+    <link rel="stylesheet" href="../assets/fonts/material-icons.css">
+    
+    
+  </head>
+  
+    
+    
+    <body dir="ltr" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    <svg class="md-svg">
+      <defs>
+        
+        
+          <svg xmlns="http://www.w3.org/2000/svg" width="416" height="448"
+    viewBox="0 0 416 448" id="__github">
+  <path fill="currentColor" d="M160 304q0 10-3.125 20.5t-10.75 19-18.125
+        8.5-18.125-8.5-10.75-19-3.125-20.5 3.125-20.5 10.75-19 18.125-8.5
+        18.125 8.5 10.75 19 3.125 20.5zM320 304q0 10-3.125 20.5t-10.75
+        19-18.125 8.5-18.125-8.5-10.75-19-3.125-20.5 3.125-20.5 10.75-19
+        18.125-8.5 18.125 8.5 10.75 19 3.125 20.5zM360
+        304q0-30-17.25-51t-46.75-21q-10.25 0-48.75 5.25-17.75 2.75-39.25
+        2.75t-39.25-2.75q-38-5.25-48.75-5.25-29.5 0-46.75 21t-17.25 51q0 22 8
+        38.375t20.25 25.75 30.5 15 35 7.375 37.25 1.75h42q20.5 0
+        37.25-1.75t35-7.375 30.5-15 20.25-25.75 8-38.375zM416 260q0 51.75-15.25
+        82.75-9.5 19.25-26.375 33.25t-35.25 21.5-42.5 11.875-42.875 5.5-41.75
+        1.125q-19.5 0-35.5-0.75t-36.875-3.125-38.125-7.5-34.25-12.875-30.25-20.25-21.5-28.75q-15.5-30.75-15.5-82.75
+        0-59.25 34-99-6.75-20.5-6.75-42.5 0-29 12.75-54.5 27 0 47.5 9.875t47.25
+        30.875q36.75-8.75 77.25-8.75 37 0 70 8 26.25-20.5
+        46.75-30.25t47.25-9.75q12.75 25.5 12.75 54.5 0 21.75-6.75 42 34 40 34
+        99.5z" />
+</svg>
+        
+      </defs>
+    </svg>
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
+    
+      <a href="#6" tabindex="1" class="md-skip">
+        跳转至
+      </a>
+    
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid">
+    <div class="md-flex">
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <a href="https://github.com/WangRongsheng" title="教书的先生" class="md-header-nav__button md-logo">
+          
+            <i class="md-icon"></i>
+          
+        </a>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <label class="md-icon md-icon--menu md-header-nav__button" for="__drawer"></label>
+      </div>
+      <div class="md-flex__cell md-flex__cell--stretch">
+        <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
+          
+            
+              <span class="md-header-nav__topic">
+                教书的先生
+              </span>
+              <span class="md-header-nav__topic">
+                7.支持向量机
+              </span>
+            
+          
+        </div>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        
+          
+            <label class="md-icon md-icon--search md-header-nav__button" for="__search"></label>
+            
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="query" data-md-state="active">
+      <label class="md-icon md-search__icon" for="__search"></label>
+      <button type="reset" class="md-icon md-search__icon" data-md-component="reset" tabindex="-1">
+        &#xE5CD;
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="result">
+          <div class="md-search-result__meta">
+            键入以开始搜索
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+          
+        
+      </div>
+      
+        <div class="md-flex__cell md-flex__cell--shrink">
+          <div class="md-header-nav__source">
+            
+
+
+  
+
+
+  <a href="https://github.com/WangRongsheng/" title="前往 Github 仓库" class="md-source" data-md-source="github">
+    
+      <div class="md-source__icon">
+        <svg viewBox="0 0 24 24" width="24" height="24">
+          <use xlink:href="#__github" width="24" height="24"></use>
+        </svg>
+      </div>
+    
+    <div class="md-source__repository">
+      GitHub
+    </div>
+  </a>
+
+          </div>
+        </div>
+      
+    </div>
+  </nav>
+</header>
+    
+    <div class="md-container">
+      
+        
+      
+      
+        
+
+  
+
+<nav class="md-tabs md-tabs--active" data-md-component="tabs">
+  <div class="md-tabs__inner md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href=".." title="介绍" class="md-tabs__link">
+          介绍
+        </a>
+      
+    </li>
+  
+
+      
+        
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href="../1绪论/" title="机器学习" class="md-tabs__link md-tabs__link--active">
+          机器学习
+        </a>
+      
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+      
+      <main class="md-main">
+        <div class="md-main__inner md-grid" data-md-component="container">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    <nav class="md-nav md-nav--primary" data-md-level="0">
+  <label class="md-nav__title md-nav__title--site" for="__drawer">
+    <a href="https://github.com/WangRongsheng" title="教书的先生" class="md-nav__button md-logo">
+      
+        <i class="md-icon"></i>
+      
+    </a>
+    教书的先生
+  </label>
+  
+    <div class="md-nav__source">
+      
+
+
+  
+
+
+  <a href="https://github.com/WangRongsheng/" title="前往 Github 仓库" class="md-source" data-md-source="github">
+    
+      <div class="md-source__icon">
+        <svg viewBox="0 0 24 24" width="24" height="24">
+          <use xlink:href="#__github" width="24" height="24"></use>
+        </svg>
+      </div>
+    
+    <div class="md-source__repository">
+      GitHub
+    </div>
+  </a>
+
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-1" type="checkbox" id="nav-1">
+    
+    <label class="md-nav__link" for="nav-1">
+      介绍
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-1">
+        介绍
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href=".." title="介绍" class="md-nav__link">
+      介绍
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../about/" title="关于" class="md-nav__link">
+      关于
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2" checked>
+    
+    <label class="md-nav__link" for="nav-2">
+      机器学习
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-2">
+        机器学习
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../1绪论/" title="1.绪论" class="md-nav__link">
+      1.绪论
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../2性能度量/" title="2.性能度量" class="md-nav__link">
+      2.性能度量
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../3假设检验&方差&偏差/" title="3.假设检验&方差&偏差" class="md-nav__link">
+      3.假设检验&方差&偏差
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../4线性模型/" title="4.线性模型" class="md-nav__link">
+      4.线性模型
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../5决策树/" title="5.决策树" class="md-nav__link">
+      5.决策树
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../6神经网络/" title="6.神经网络" class="md-nav__link">
+      6.神经网络
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+      
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        7.支持向量机
+      </label>
+    
+    <a href="./" title="7.支持向量机" class="md-nav__link md-nav__link--active">
+      7.支持向量机
+    </a>
+    
+      
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">目录</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#61" title="6.1 函数间隔与几何间隔" class="md-nav__link">
+    6.1 函数间隔与几何间隔
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#611" title="6.1.1 函数间隔" class="md-nav__link">
+    6.1.1 函数间隔
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#612" title="6.1.2 几何间隔" class="md-nav__link">
+    6.1.2 几何间隔
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#62" title="6.2 最大间隔与支持向量" class="md-nav__link">
+    6.2 最大间隔与支持向量
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#63" title="6.3 从原始优化问题到对偶问题" class="md-nav__link">
+    6.3 从原始优化问题到对偶问题
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#64" title="6.4 核函数" class="md-nav__link">
+    6.4 核函数
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#65" title="6.5 软间隔支持向量机" class="md-nav__link">
+    6.5 软间隔支持向量机
+  </a>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+    
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../8贝叶斯分类器/" title="8.贝叶斯分类器" class="md-nav__link">
+      8.贝叶斯分类器
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../9EM算法/" title="9.EM算法" class="md-nav__link">
+      9.EM算法
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../10集成学习/" title="10.集成学习" class="md-nav__link">
+      10.集成学习
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../11聚类/" title="11.聚类" class="md-nav__link">
+      11.聚类
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../12降维与度量学习/" title="12.降维与度量学习" class="md-nav__link">
+      12.降维与度量学习
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../13特征选择与稀疏学习/" title="13.特征选择与稀疏学习" class="md-nav__link">
+      13.特征选择与稀疏学习
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../14计算学习理论/" title="14.计算学习理论" class="md-nav__link">
+      14.计算学习理论
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../15半监督学习/" title="15.半监督学习" class="md-nav__link">
+      15.半监督学习
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../16概率图模型/" title="16.概率图模型" class="md-nav__link">
+      16.概率图模型
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../17强化学习/" title="17.强化学习" class="md-nav__link">
+      17.强化学习
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">目录</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#61" title="6.1 函数间隔与几何间隔" class="md-nav__link">
+    6.1 函数间隔与几何间隔
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#611" title="6.1.1 函数间隔" class="md-nav__link">
+    6.1.1 函数间隔
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#612" title="6.1.2 几何间隔" class="md-nav__link">
+    6.1.2 几何间隔
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#62" title="6.2 最大间隔与支持向量" class="md-nav__link">
+    6.2 最大间隔与支持向量
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#63" title="6.3 从原始优化问题到对偶问题" class="md-nav__link">
+    6.3 从原始优化问题到对偶问题
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#64" title="6.4 核函数" class="md-nav__link">
+    6.4 核函数
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#65" title="6.5 软间隔支持向量机" class="md-nav__link">
+    6.5 软间隔支持向量机
+  </a>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                  <a href="https://github.com/WangRongsheng/edit/master/docs/7支持向量机.md" title="编辑此页" class="md-icon md-content__icon">&#xE3C9;</a>
+                
+                
+                <p>写在前面的话：距离上篇博客竟过去快一个月了，写完神经网络博客正式进入考试模式，几次考试+几篇报告下来弄得心颇不宁静了，今日定下来看到一句鸡血：Tomorrow is another due！也许生活就需要一些deadline~~</p>
+<p>上篇主要介绍了神经网络。首先从生物学神经元出发，引出了它的数学抽象模型--MP神经元以及由两层神经元组成的感知机模型，并基于梯度下降的方法描述了感知机模型的权值调整规则。由于简单的感知机不能处理线性不可分的情形，因此接着引入了含隐层的前馈型神经网络，BP神经网络则是其中最为成功的一种学习方法，它使用误差逆传播的方法来逐层调节连接权。最后简单介绍了局部/全局最小以及目前十分火热的深度学习的概念。本篇围绕的核心则是曾经一度取代过神经网络的另一种监督学习算法--<strong>支持向量机</strong>（Support Vector Machine），简称<strong>SVM</strong>。</p>
+<h1 id="6"><strong>6、支持向量机</strong><a class="headerlink" href="#6" title="Permanent link">&para;</a></h1>
+<p>支持向量机是一种经典的二分类模型，基本模型定义为特征空间中最大间隔的线性分类器，其学习的优化目标便是间隔最大化，因此支持向量机本身可以转化为一个凸二次规划求解的问题。</p>
+<h2 id="61"><strong>6.1 函数间隔与几何间隔</strong><a class="headerlink" href="#61" title="Permanent link">&para;</a></h2>
+<p>对于二分类学习，假设现在的数据是线性可分的，这时分类学习最基本的想法就是找到一个合适的超平面，该超平面能够将不同类别的样本分开，类似二维平面使用ax+by+c=0来表示，超平面实际上表示的就是高维的平面，如下图所示：</p>
+<p><img alt="1.png" src="https://i.loli.net/2018/10/17/5bc72f6a2ec8a.png" /></p>
+<p>对数据点进行划分时，易知：当超平面距离与它最近的数据点的间隔越大，分类的鲁棒性越好，即当新的数据点加入时，超平面对这些点的适应性最强，出错的可能性最小。因此需要让所选择的超平面能够最大化这个间隔Gap（如下图所示）， 常用的间隔定义有两种，一种称之为函数间隔，一种为几何间隔，下面将分别介绍这两种间隔，并对SVM为什么会选用几何间隔做了一些阐述。</p>
+<p><img alt="2.png" src="https://i.loli.net/2018/10/17/5bc72f6a06d5a.png" /></p>
+<h3 id="611"><strong>6.1.1 函数间隔</strong><a class="headerlink" href="#611" title="Permanent link">&para;</a></h3>
+<p>在超平面w'x+b=0确定的情况下，|w'x<em>+b|能够代表点x</em>距离超平面的远近，易知：当w'x<em>+b&gt;0时，表示x</em>在超平面的一侧（正类，类标为1），而当w'x<em>+b&lt;0时，则表示x</em>在超平面的另外一侧（负类，类别为-1），因此（w'x<em>+b）y</em> 的正负性恰能表示数据点x*是否被分类正确。于是便引出了<strong>函数间隔</strong>的定义（functional margin）:</p>
+<p><img alt="3.png" src="https://i.loli.net/2018/10/17/5bc72f690a14b.png" /></p>
+<p>而超平面（w,b）关于所有样本点（Xi，Yi）的函数间隔最小值则为超平面在训练数据集T上的函数间隔：</p>
+<p><img alt="4.png" src="https://i.loli.net/2018/10/17/5bc72f690ac26.png" /></p>
+<p>可以看出：这样定义的函数间隔在处理SVM上会有问题，当超平面的两个参数w和b同比例改变时，函数间隔也会跟着改变，但是实际上超平面还是原来的超平面，并没有变化。例如：w1x1+w2x2+w3x3+b=0其实等价于2w1x1+2w2x2+2w3x3+2b=0，但计算的函数间隔却翻了一倍。从而引出了能真正度量点到超平面距离的概念--几何间隔（geometrical margin）。</p>
+<h3 id="612"><strong>6.1.2 几何间隔</strong><a class="headerlink" href="#612" title="Permanent link">&para;</a></h3>
+<p><strong>几何间隔</strong>代表的则是数据点到超平面的真实距离，对于超平面w'x+b=0，w代表的是该超平面的法向量，设x<em>为超平面外一点x在法向量w方向上的投影点，x与超平面的距离为r，则有x</em>=x-r(w/||w||)，又x<em>在超平面上，即w'x</em>+b=0，代入即可得：</p>
+<p><img alt="5.png" src="https://i.loli.net/2018/10/17/5bc72f697d499.png" /></p>
+<p>为了得到r的绝对值，令r呈上其对应的类别y，即可得到几何间隔的定义：</p>
+<p><img alt="6.png" src="https://i.loli.net/2018/10/17/5bc72f696fd10.png" /></p>
+<p>从上述函数间隔与几何间隔的定义可以看出：实质上函数间隔就是|w'x+b|，而几何间隔就是点到超平面的距离。</p>
+<h2 id="62"><strong>6.2 最大间隔与支持向量</strong><a class="headerlink" href="#62" title="Permanent link">&para;</a></h2>
+<p>通过前面的分析可知：函数间隔不适合用来最大化间隔，因此这里我们要找的最大间隔指的是几何间隔，于是最大间隔分类器的目标函数定义为：</p>
+<p><img alt="7.png" src="https://i.loli.net/2018/10/17/5bc72f69af163.png" /></p>
+<p>一般地，我们令r^为1（这样做的目的是为了方便推导和目标函数的优化），从而上述目标函数转化为：</p>
+<p><img alt="8.png" src="https://i.loli.net/2018/10/17/5bc72f697bb1d.png" /></p>
+<p>对于y(w'x+b)=1的数据点，即下图中位于w'x+b=1或w'x+b=-1上的数据点，我们称之为<strong>支持向量</strong>（support vector），易知：对于所有的支持向量，它们恰好满足y<em>(w'x</em>+b)=1，而所有不是支持向量的点，有y<em>(w'x</em>+b)&gt;1。</p>
+<p><img alt="9.png" src="https://i.loli.net/2018/10/17/5bc72f6a838c4.png" /></p>
+<h2 id="63"><strong>6.3 从原始优化问题到对偶问题</strong><a class="headerlink" href="#63" title="Permanent link">&para;</a></h2>
+<p>对于上述得到的目标函数，求1/||w||的最大值相当于求||w||^2的最小值，因此很容易将原来的目标函数转化为：</p>
+<p><img alt="10.png" src="https://i.loli.net/2018/10/17/5bc72f6978cbb.png" /></p>
+<p>即变为了一个带约束的凸二次规划问题，按书上所说可以使用现成的优化计算包（QP优化包）求解，但由于SVM的特殊性，一般我们将原问题变换为它的<strong>对偶问题</strong>，接着再对其对偶问题进行求解。为什么通过对偶问题进行求解，有下面两个原因：</p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2</pre></div></td><td class="code"><div class="codehilite"><pre><span></span>* 一是因为使用对偶问题更容易求解；
+* 二是因为通过对偶问题求解出现了向量内积的形式，从而能更加自然地引出核函数。
+</pre></div>
+</td></tr></table>
+
+<p>对偶问题，顾名思义，可以理解成优化等价的问题，更一般地，是将一个原始目标函数的最小化转化为它的对偶函数最大化的问题。对于当前的优化问题，首先我们写出它的朗格朗日函数：</p>
+<p><img alt="11.png" src="https://i.loli.net/2018/10/17/5bc72f9332be7.png" /></p>
+<p>上式很容易验证：当其中有一个约束条件不满足时，L的最大值为 ∞（只需令其对应的α为 ∞即可）；当所有约束条件都满足时，L的最大值为&frac12;||w||^2（此时令所有的α为0），因此实际上原问题等价于：</p>
+<p><img alt="12.png" src="https://i.loli.net/2018/10/17/5bc72f93321c5.png" /></p>
+<p>由于这个的求解问题不好做，因此一般我们将最小和最大的位置交换一下（需满足KKT条件） ，变成原问题的对偶问题：</p>
+<p><img alt="13.png" src="https://i.loli.net/2018/10/17/5bc72f9330967.png" /></p>
+<p>这样就将原问题的求最小变成了对偶问题求最大（用对偶这个词还是很形象），接下来便可以先求L对w和b的极小，再求L对α的极大。</p>
+<p>（1）首先求L对w和b的极小，分别求L关于w和b的偏导，可以得出：</p>
+<p><img alt="14.png" src="https://i.loli.net/2018/10/17/5bc72f9333e66.png" /></p>
+<p>将上述结果代入L得到：</p>
+<p><img alt="15.png" src="https://i.loli.net/2018/10/17/5bc72f935ae21.png" /></p>
+<p>（2）接着L关于α极大求解α（通过SMO算法求解，此处不做深入）。</p>
+<p><img alt="16.png" src="https://i.loli.net/2018/10/17/5bc72f9338a9d.png" /></p>
+<p>（3）最后便可以根据求解出的α，计算出w和b，从而得到分类超平面函数。</p>
+<p><img alt="17.png" src="https://i.loli.net/2018/10/17/5bc72f93419ca.png" /></p>
+<p>在对新的点进行预测时，实际上就是将数据点x*代入分类函数f(x)=w'x+b中，若f(x)&gt;0，则为正类，f(x)&lt;0，则为负类，根据前面推导得出的w与b，分类函数如下所示，此时便出现了上面所提到的内积形式。</p>
+<p><img alt="18.png" src="https://i.loli.net/2018/10/17/5bc72f9353166.png" /></p>
+<p>这里实际上只需计算新样本与支持向量的内积，因为对于非支持向量的数据点，其对应的拉格朗日乘子一定为0，根据最优化理论（K-T条件），对于不等式约束y(w'x+b)-1≥0，满足：</p>
+<p><img alt="19.png" src="https://i.loli.net/2018/10/17/5bc72f933c947.png" />        </p>
+<h2 id="64"><strong>6.4 核函数</strong><a class="headerlink" href="#64" title="Permanent link">&para;</a></h2>
+<p>由于上述的超平面只能解决线性可分的问题，对于线性不可分的问题，例如：异或问题，我们需要使用核函数将其进行推广。一般地，解决线性不可分问题时，常常采用<strong>映射</strong>的方式，将低维原始空间映射到高维特征空间，使得数据集在高维空间中变得线性可分，从而再使用线性学习器分类。如果原始空间为有限维，即属性数有限，那么总是存在一个高维特征空间使得样本线性可分。若∅代表一个映射，则在特征空间中的划分函数变为：</p>
+<p><img alt="20.png" src="https://i.loli.net/2018/10/17/5bc72f934303e.png" /></p>
+<p>按照同样的方法，先写出新目标函数的拉格朗日函数，接着写出其对偶问题，求L关于w和b的极大，最后运用SOM求解α。可以得出：</p>
+<p>（1）原对偶问题变为：</p>
+<p><img alt="21.png" src="https://i.loli.net/2018/10/17/5bc730cc68b3b.png" /></p>
+<p>（2）原分类函数变为：
+​    <img alt="22.png" src="https://i.loli.net/2018/10/17/5bc730cc1b673.png" /></p>
+<p>求解的过程中，只涉及到了高维特征空间中的内积运算，由于特征空间的维数可能会非常大，例如：若原始空间为二维，映射后的特征空间为5维，若原始空间为三维，映射后的特征空间将是19维，之后甚至可能出现无穷维，根本无法进行内积运算了，此时便引出了<strong>核函数</strong>（Kernel）的概念。</p>
+<p><img alt="23.png" src="https://i.loli.net/2018/10/17/5bc730cc49adc.png" /></p>
+<p>因此，核函数可以直接计算隐式映射到高维特征空间后的向量内积，而不需要显式地写出映射后的结果，它虽然完成了将特征从低维到高维的转换，但最终却是在低维空间中完成向量内积计算，与高维特征空间中的计算等效<strong>（低维计算，高维表现）</strong>，从而避免了直接在高维空间无法计算的问题。引入核函数后，原来的对偶问题与分类函数则变为：</p>
+<p>（1）对偶问题：</p>
+<p><img alt="24.png" src="https://i.loli.net/2018/10/17/5bc730cc173b2.png" /></p>
+<p>（2）分类函数：</p>
+<p><img alt="25.png" src="https://i.loli.net/2018/10/17/5bc730cc05959.png" /></p>
+<p>因此，在线性不可分问题中，核函数的选择成了支持向量机的最大变数，若选择了不合适的核函数，则意味着将样本映射到了一个不合适的特征空间，则极可能导致性能不佳。同时，核函数需要满足以下这个必要条件：</p>
+<p><img alt="26.png" src="https://i.loli.net/2018/10/17/5bc730ccc468c.png" /></p>
+<p>由于核函数的构造十分困难，通常我们都是从一些常用的核函数中选择，下面列出了几种常用的核函数：</p>
+<p><img alt="27.png" src="https://i.loli.net/2018/10/17/5bc730ccc541a.png" /></p>
+<h2 id="65"><strong>6.5 软间隔支持向量机</strong><a class="headerlink" href="#65" title="Permanent link">&para;</a></h2>
+<p>前面的讨论中，我们主要解决了两个问题：当数据线性可分时，直接使用最大间隔的超平面划分；当数据线性不可分时，则通过核函数将数据映射到高维特征空间，使之线性可分。然而在现实问题中，对于某些情形还是很难处理，例如数据中有<strong>噪声</strong>的情形，噪声数据（<strong>outlier</strong>）本身就偏离了正常位置，但是在前面的SVM模型中，我们要求所有的样本数据都必须满足约束，如果不要这些噪声数据还好，当加入这些outlier后导致划分超平面被挤歪了，如下图所示，对支持向量机的泛化性能造成很大的影响。</p>
+<p><img alt="28.png" src="https://i.loli.net/2018/10/17/5bc730ccce68e.png" /></p>
+<p>为了解决这一问题，我们需要允许某一些数据点不满足约束，即可以在一定程度上偏移超平面，同时使得不满足约束的数据点尽可能少，这便引出了<strong>“软间隔”支持向量机</strong>的概念</p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2</pre></div></td><td class="code"><div class="codehilite"><pre><span></span>* 允许某些数据点不满足约束y(w&#39;x+b)≥1；
+* 同时又使得不满足约束的样本尽可能少。
+</pre></div>
+</td></tr></table>
+
+<p>这样优化目标变为：</p>
+<p><img alt="29.png" src="https://i.loli.net/2018/10/17/5bc730cc6c9fe.png" /></p>
+<p>如同阶跃函数，0/1损失函数虽然表示效果最好，但是数学性质不佳。因此常用其它函数作为“替代损失函数”。</p>
+<p><img alt="30.png" src="https://i.loli.net/2018/10/17/5bc730cc5e5a9.png" /></p>
+<p>支持向量机中的损失函数为<strong>hinge损失</strong>，引入<strong>“松弛变量”</strong>，目标函数与约束条件可以写为：</p>
+<p><img alt="31.png" src="https://i.loli.net/2018/10/17/5bc7317aa3411.png" /></p>
+<p>其中C为一个参数，控制着目标函数与新引入正则项之间的权重，这样显然每个样本数据都有一个对应的松弛变量，用以表示该样本不满足约束的程度，将新的目标函数转化为拉格朗日函数得到：</p>
+<p><img alt="32.png" src="https://i.loli.net/2018/10/17/5bc7317a4c96e.png" /></p>
+<p>按照与之前相同的方法，先让L求关于w，b以及松弛变量的极小，再使用SMO求出α，有：</p>
+<p><img alt="33.png" src="https://i.loli.net/2018/10/17/5bc7317a6dff2.png" /></p>
+<p>将w代入L化简，便得到其对偶问题：</p>
+<p><img alt="34.png" src="https://i.loli.net/2018/10/17/5bc7317ab6646.png" /></p>
+<p>将“软间隔”下产生的对偶问题与原对偶问题对比可以发现：新的对偶问题只是约束条件中的α多出了一个上限C，其它的完全相同，因此在引入核函数处理线性不可分问题时，便能使用与“硬间隔”支持向量机完全相同的方法。</p>
+<p>----在此SVM就介绍完毕。</p>
+                
+                  
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid">
+        
+          <a href="../6神经网络/" title="6.神经网络" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
+            </div>
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  后退
+                </span>
+                6.神经网络
+              </span>
+            </div>
+          </a>
+        
+        
+          <a href="../8贝叶斯分类器/" title="8.贝叶斯分类器" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  前进
+                </span>
+                8.贝叶斯分类器
+              </span>
+            </div>
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-forward md-footer-nav__button"></i>
+            </div>
+          </a>
+        
+      </nav>
+    </div>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+        powered by
+        <a href="https://www.mkdocs.org">MkDocs</a>
+        and
+        <a href="https://squidfunk.github.io/mkdocs-material/">
+          Material for MkDocs</a>
+      </div>
+      
+        
+  <div class="md-footer-social">
+    <link rel="stylesheet" href="../assets/fonts/font-awesome.css">
+    
+      <a href="https://github.com/WangRongsheng" class="md-footer-social__link fa fa-github"></a>
+    
+  </div>
+
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    
+      <script src="../assets/javascripts/application.5e60981f.js"></script>
+      
+        
+        
+          
+          <script src="../assets/javascripts/lunr/lunr.stemmer.support.js"></script>
+          
+            
+              
+              
+            
+          
+          
+        
+      
+      <script>app.initialize({version:"1.0.4",url:{base:".."}})</script>
+      
+    
+    
+      
+    
+  </body>
+</html>
